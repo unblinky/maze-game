@@ -1,8 +1,39 @@
 [gd_scene load_steps=3 format=3 uid="uid://ctagbh4tqwhuw"]
 
-[ext_resource type="Texture2D" uid="uid://d2dou0hpe2iec" path="res://Main/icon.svg" id="1_fqi7b"]
 [ext_resource type="Script" path="res://Room/Room.gd" id="2_db8oa"]
+[ext_resource type="Texture2D" uid="uid://sgoncenbwkg0" path="res://Room/assets/room_tileset.png" id="2_vy7bb"]
 
-[node name="Room" type="Sprite2D"]
-texture = ExtResource("1_fqi7b")
+[node name="Room" type="Node2D"]
 script = ExtResource("2_db8oa")
+
+[node name="Base" type="Sprite2D" parent="."]
+texture = ExtResource("2_vy7bb")
+region_enabled = true
+region_rect = Rect2(0, 128, 64, 64)
+
+[node name="NorthDoor" type="Sprite2D" parent="."]
+position = Vector2(0, -21)
+rotation = 1.57079
+texture = ExtResource("2_vy7bb")
+region_enabled = true
+region_rect = Rect2(64, 144, 16, 32)
+
+[node name="EastDoor" type="Sprite2D" parent="."]
+position = Vector2(23, -1)
+rotation = -3.14159
+texture = ExtResource("2_vy7bb")
+region_enabled = true
+region_rect = Rect2(64, 144, 16, 32)
+
+[node name="SouthDoor" type="Sprite2D" parent="."]
+position = Vector2(1.00007, 19)
+rotation = -1.57079
+texture = ExtResource("2_vy7bb")
+region_enabled = true
+region_rect = Rect2(64, 144, 16, 32)
+
+[node name="WestDoor" type="Sprite2D" parent="."]
+position = Vector2(-22, 0)
+texture = ExtResource("2_vy7bb")
+region_enabled = true
+region_rect = Rect2(64, 144, 16, 32)
