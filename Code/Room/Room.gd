@@ -14,12 +14,25 @@ enum Door
 	WEST
 }
 
-var doors: Array[Door] = [Door.NORTH, Door.EAST, Door.SOUTH, Door.WEST]
+
+# Initialize.
+var grid_position: Vector2i
+var doors: Array = [Door.NORTH, Door.EAST, Door.SOUTH, Door.WEST]
+var directions: Array[Vector2i] = [Vector2i(0, -1), Vector2i(+1, 0), Vector2i(0, +1), Vector2i(-1, 0)]
 
 
-func RandomDirection():
-	var rando: int = randi_range(0, doors.size() - 1)
-	return doors.pop_at(rando)
+#func _ready():
+#	for door in doors:
+#		HideDoor(door)
+
+
+#func RandomDirection():
+#	var rando: int = randi_range(0, doors.size() - 1)
+#	return doors.pop_at(rando)
+
+#func GetDirection():
+#	return Door.SOUTH
+	
 
 
 func ShowDoor(door: Door):
