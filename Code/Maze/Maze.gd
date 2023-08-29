@@ -7,7 +7,7 @@ const ROOM = preload("res://Room/Room.tscn")
 @export var separation: int = 64
 
 var maze_offset: Vector2i = Vector2i(128, 128)
-var visited_rooms: Array[Room]
+var visited_rooms: Array
 var playhead: Vector2i = Vector2i.ZERO
 
 
@@ -23,9 +23,6 @@ func CreateMaze():
 	while room_count < total_rooms:
 		await get_tree().create_timer(0.3).timeout
 		
-		
-		
-		
 		# Add new room.
 		# Start in one spot.
 		var room = ROOM.instantiate()
@@ -38,42 +35,84 @@ func CreateMaze():
 		room.grid_position = playhead
 		room.position = playhead * separation + maze_offset
 		
+		
+		if visited_rooms.size() > 0:
+			pass
+		else:
+			# Probably the first time running.
+			visited_rooms.append(playhead)
+			
+			# Knock down a wall.
+			# Look at where we've been.
+			var random_direction = Room.Passage.EAST
+			
+			# Where can we go?
+			var grid_check: Vector2i
+			match random_direction:
+				Room.Passage.NORTH:
+					grid_check = playhead + Vector2i.UP
+				Room.Passage.EAST:
+					grid_check = playhead + Vector2i.RIGHT
+				Room.Passage.SOUTH:
+					grid_check = playhead + Vector2i.DOWN
+				Room.Passage.WEST:
+					grid_check = playhead + Vector2i.LEFT
+					
+			
+			
+			for coords in visited_rooms:
+				if coords == grid_check:
+					
+					break
+			
+			
+			# Random. later.
+			room.OpenPassage(Room.Passage.EAST)
+			
+			# Update the playhead.
+			playhead += Vector2i.RIGHT
+			
+			
 		# Close all the doors around the edges of the maze.
-		if room.grid_position.x <= 0:
-			room.HideDoor(Room.Door.WEST)
-		if room.grid_position.x > bounds.x - 2:
-			room.HideDoor(Room.Door.EAST)
-		if room.grid_position.y <= 0:
-			room.HideDoor(Room.Door.NORTH)
-		if room.grid_position.y > bounds.y - 2:
-			room.HideDoor(Room.Door.SOUTH)
+#		if room.grid_position.x <= 0:
+#			room.HideDoor(Room.Door.WEST)
+#		if room.grid_position.x > bounds.x - 2:
+#			room.HideDoor(Room.Door.EAST)
+#		if room.grid_position.y <= 0:
+#			room.HideDoor(Room.Door.NORTH)
+#		if room.grid_position.y > bounds.y - 2:
+#			room.HideDoor(Room.Door.SOUTH)
 	
 	
 		# Lookaround on the room.
 		# Returns doors[]
 #		var random_room = room.doors.pick_random()
-		if room.doors.is_empty():
-			print("We hit a dead end.")
-			return
-		else:
-			var rando: int = randi_range(0, room.doors.size() - 1)
+#		if room.doors.is_empty():
+#			print("We hit a dead end.")
+#			return
+		
+#		else:
+#			var rando: int = randi_range(0, room.doors.size() - 1)
 			# Pop(): remove a `door` from the `doors` array.
-			var direction = room.doors[rando]
-			
-			# Reposition the playhead for the next loop.
-			match direction:
-				Room.Door.NORTH:
-					room.ShowDoor(Room.Door.NORTH)
-					playhead.y -= 1
-				Room.Door.EAST:
-					room.ShowDoor(Room.Door.EAST)
-					playhead.x += 1
-				Room.Door.SOUTH:
-					room.ShowDoor(Room.Door.SOUTH)
-					playhead.y += 1
-				Room.Door.WEST:
-					room.ShowDoor(Room.Door.WEST)
-					playhead.x -= 1
+#			for i in 4:
+				
+#
+#			var direction = room.doors[rando]
+#
+#			# Reposition the playhead for the next loop.
+#			match direction:
+#				Room.Door.NORTH:
+#					room.ShowDoor(Room.Door.NORTH)
+#					playhead.y -= 1
+#				Room.Door.EAST:
+#					room.ShowDoor(Room.Door.EAST)
+#					playhead.x += 1
+#				Room.Door.SOUTH:
+#					room.ShowDoor(Room.Door.SOUTH)
+#					playhead.y += 1
+#				Room.Door.WEST:
+#					room.ShowDoor(Room.Door.WEST)
+#					playhead.x -= 1
 			
 #			room.HideDoor(direction)
 			

@@ -1,12 +1,13 @@
 extends Node2D
 class_name Room
 
-@onready var north_door = $NorthDoor
-@onready var east_door = $EastDoor
-@onready var south_door = $SouthDoor
-@onready var west_door = $WestDoor
+@onready var north_passage = $NorthPassage
+@onready var east_passage = $EastPassage
+@onready var south_passage = $SouthPassage
+@onready var west_passage = $WestPassage
 
-enum Door
+
+enum Passage
 {
 	NORTH,
 	EAST,
@@ -17,51 +18,34 @@ enum Door
 
 # Initialize.
 var grid_position: Vector2i
-var doors: Array = [Door.NORTH, Door.EAST, Door.SOUTH, Door.WEST]
+#var doors: Array = []
 #var directions: Array[Vector2i] = [Vector2i(0, -1), Vector2i(+1, 0), Vector2i(0, +1), Vector2i(-1, 0)]
 
 
-#func _ready():
-#	for door in doors:
-#		HideDoor(door)
+func _ready():
+	# Hide graphics.
+	north_passage.hide()
+	east_passage.hide()
+	south_passage.hide()
+	west_passage.hide()
 
 
 #func RandomDirection():
 #	var rando: int = randi_range(0, doors.size() - 1)
 #	return doors.pop_at(rando)
 
+
 #func GetDirection():
 #	return Door.SOUTH
-	
 
 
-func ShowDoor(door: Door):
-	match door:
-		Door.NORTH:
-			north_door.show()
-			doors.append(Door.NORTH)
-		Door.EAST:
-			east_door.show()
-			doors.append(Door.EAST)
-		Door.SOUTH:
-			south_door.show()
-			doors.append(Door.SOUTH)
-		Door.WEST:
-			west_door.show()
-			doors.append(Door.WEST)
-
-
-func HideDoor(door: Door):
-	match door:
-		Door.NORTH:
-			north_door.hide()
-			doors.erase(Door.NORTH)
-		Door.EAST:
-			east_door.hide()
-			doors.erase(Door.EAST)
-		Door.SOUTH:
-			south_door.hide()
-			doors.erase(Door.SOUTH)
-		Door.WEST:
-			west_door.hide()
-			doors.erase(Door.WEST)
+func OpenPassage(passage: Passage):
+	match passage:
+		Passage.NORTH:
+			north_passage.show()
+		Passage.EAST:
+			east_passage.show()
+		Passage.SOUTH:
+			south_passage.show()
+		Passage.WEST:
+			west_passage.show()
