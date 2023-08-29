@@ -7,7 +7,6 @@ const ROOM = preload("res://Room/Room.tscn")
 @export var separation: int = 64
 
 var maze_offset: Vector2i = Vector2i(128, 128)
-#var rooms: Array[Room]
 var visited_rooms: Array[Room]
 var playhead: Vector2i = Vector2i.ZERO
 
@@ -23,6 +22,9 @@ func CreateMaze():
 	
 	while room_count < total_rooms:
 		await get_tree().create_timer(0.3).timeout
+		
+		
+		
 		
 		# Add new room.
 		# Start in one spot.
@@ -57,7 +59,6 @@ func CreateMaze():
 			var rando: int = randi_range(0, room.doors.size() - 1)
 			# Pop(): remove a `door` from the `doors` array.
 			var direction = room.doors[rando]
-			room.HideDoor(direction)
 			
 			# Reposition the playhead for the next loop.
 			match direction:
@@ -74,6 +75,7 @@ func CreateMaze():
 					room.ShowDoor(Room.Door.WEST)
 					playhead.x -= 1
 			
+#			room.HideDoor(direction)
 			
 		
 		# Increment `room_count`.
