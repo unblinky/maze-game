@@ -6,9 +6,10 @@ const ROOM = preload("res://Room/Room.tscn")
 @export var bounds: Vector2i = Vector2i(8, 8)
 @export var separation: int = 64
 
-var maze_offset: Vector2i = Vector2i(128, 128)
-var visited_rooms: Array
-var playhead: Vector2i = Vector2i.ZERO
+var maze_offset: Vector2i = Vector2i(128, 128) # Test var.
+
+var visited_coords: Array[Vector2i]
+var playhead_coord: Vector2i = Vector2i.ZERO
 
 
 func _ready():
@@ -16,31 +17,43 @@ func _ready():
 
 
 func CreateMaze():
-	var room_count: int = 0
 	var total_rooms: int = bounds.x * bounds.y
 	
-	
-	while room_count < total_rooms:
+	# Run a loop until the playhead has visited every cell.
+	while visited_coords.size() < total_rooms:
 		await get_tree().create_timer(0.3).timeout
 		
-		# Add new room.
-		# Start in one spot.
-		var room = ROOM.instantiate()
-		add_child(room)
-		room_count += 1
+		# Random.
 		
-		
-		# Find grid position.
-		print("PLAYHEAD: ", playhead)
-		room.grid_position = playhead
-		room.position = playhead * separation + maze_offset
-		
-		
-		if visited_rooms.size() > 0:
-			pass
-		else:
+		# If we already have our first room.
+		if visited_coords.size() > 0:
+			
+			# Add new room.
+			var room = ROOM.instantiate()
+			add_child(room)
+			room.position = playhead_coord * separation + maze_offset
+			
+			
+			
+			room.OpenPassage(random_direction)
+			
+			# Update the playhead.
+			playhead_coord += Vector2i.RIGHT
+			
+			# Find grid position.
+			print("PLAYHEAD: ", playhead_coord)
+			
+			
+			
 			# Probably the first time running.
-			visited_rooms.append(playhead)
+		else:
+			visited_coords.append(playhead_coord)
+			
+			
+			
+			
+			
+			
 			
 			# Knock down a wall.
 			# Look at where we've been.
@@ -48,29 +61,38 @@ func CreateMaze():
 			
 			# Where can we go?
 			var grid_check: Vector2i
+			
 			match random_direction:
 				Room.Passage.NORTH:
-					grid_check = playhead + Vector2i.UP
+					grid_check = playhead_coord + Vector2i.UP
 				Room.Passage.EAST:
-					grid_check = playhead + Vector2i.RIGHT
+					grid_check = playhead_coord + Vector2i.RIGHT
 				Room.Passage.SOUTH:
-					grid_check = playhead + Vector2i.DOWN
+					grid_check = playhead_coord + Vector2i.DOWN
 				Room.Passage.WEST:
-					grid_check = playhead + Vector2i.LEFT
-					
+					grid_check = playhead_coord + Vector2i.LEFT
+			
+			print("GridCheck: ", grid_check)
+			if visited_coords.has(grid_check):
+				print(grid_check)
 			
 			
-			for coords in visited_rooms:
-				if coords == grid_check:
-					
-					break
+			# Add new room.
+			# Start in one spot.
+			var room = ROOM.instantiate()
+			add_child(room)
 			
+#			room.grid_position = playhead_coord
+			room.position = playhead_coord * separation + maze_offset
 			
-			# Random. later.
-			room.OpenPassage(Room.Passage.EAST)
+			# Random.
+			room.OpenPassage(random_direction)
 			
 			# Update the playhead.
-			playhead += Vector2i.RIGHT
+			playhead_coord += Vector2i.RIGHT
+			
+			# Find grid position.
+			print("PLAYHEAD: ", playhead_coord)
 			
 			
 		# Close all the doors around the edges of the maze.
@@ -84,70 +106,3 @@ func CreateMaze():
 #			room.HideDoor(Room.Door.SOUTH)
 	
 	
-		# Lookaround on the room.
-		# Returns doors[]
-#		var random_room = room.doors.pick_random()
-#		if room.doors.is_empty():
-#			print("We hit a dead end.")
-#			return
-		
-#		else:
-#			var rando: int = randi_range(0, room.doors.size() - 1)
-			# Pop(): remove a `door` from the `doors` array.
-#			for i in 4:
-				
-#
-#			var direction = room.doors[rando]
-#
-#			# Reposition the playhead for the next loop.
-#			match direction:
-#				Room.Door.NORTH:
-#					room.ShowDoor(Room.Door.NORTH)
-#					playhead.y -= 1
-#				Room.Door.EAST:
-#					room.ShowDoor(Room.Door.EAST)
-#					playhead.x += 1
-#				Room.Door.SOUTH:
-#					room.ShowDoor(Room.Door.SOUTH)
-#					playhead.y += 1
-#				Room.Door.WEST:
-#					room.ShowDoor(Room.Door.WEST)
-#					playhead.x -= 1
-			
-#			room.HideDoor(direction)
-			
-		
-		# Increment `room_count`.
-#		room_count += 1
-	
-	
-
-	
-	
-	
-	# Standard left-to-right the down.
-#	for height_index in size.y:
-#		for width_index in size.x:
-#			await timer.timeout
-#
-#			var room = ROOM.instantiate()
-#			visited_rooms.append(room)
-#
-#			add_child(room)
-			
-#			var new_door: Room.Door = room.RandomDirection()
-#			match new_door:
-#				Room.Door.NORTH:
-#					room.ShowDoor(Room.Door.NORTH)
-#					height_index -= 1
-#				Room.Door.EAST:
-#					room.ShowDoor(Room.Door.EAST)
-#					width_index += 1
-#				Room.Door.SOUTH:
-#					room.ShowDoor(Room.Door.SOUTH)
-#					height_index += 1
-#				Room.Door.WEST:
-#					room.ShowDoor(Room.Door.WEST)
-#					width_index -= 1
-			
-			

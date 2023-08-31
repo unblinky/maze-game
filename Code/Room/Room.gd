@@ -9,15 +9,15 @@ class_name Room
 
 enum Passage
 {
-	NORTH,
-	EAST,
-	SOUTH,
-	WEST
+	UP,
+	RIGHT,
+	DOWN,
+	LEFT
 }
 
 
 # Initialize.
-var grid_position: Vector2i
+#var grid_position: Vector2i
 #var doors: Array = []
 #var directions: Array[Vector2i] = [Vector2i(0, -1), Vector2i(+1, 0), Vector2i(0, +1), Vector2i(-1, 0)]
 
@@ -41,11 +41,11 @@ func _ready():
 
 func OpenPassage(passage: Passage):
 	match passage:
-		Passage.NORTH:
+		Passage.UP:
 			north_passage.show()
-		Passage.EAST:
+		Passage.RIGHT:
 			east_passage.show()
-		Passage.SOUTH:
+		Passage.DOWN:
 			south_passage.show()
-		Passage.WEST:
+		Passage.LEFT:
 			west_passage.show()
