@@ -14,22 +14,22 @@ script = ExtResource("2_db8oa")
 texture = ExtResource("2_qlgl1")
 region_rect = Rect2(0, 128, 64, 64)
 
-[node name="NorthPassage" type="Sprite2D" parent="."]
+[node name="PassageLeft" type="Sprite2D" parent="."]
 visible = false
-texture = ExtResource("3_udmaw")
+texture = ExtResource("6_o3h74")
 region_rect = Rect2(64, 144, 16, 32)
 
-[node name="EastPassage" type="Sprite2D" parent="."]
+[node name="PassageRight" type="Sprite2D" parent="."]
 visible = false
 texture = ExtResource("4_f765l")
 region_rect = Rect2(64, 144, 16, 32)
 
-[node name="SouthPassage" type="Sprite2D" parent="."]
+[node name="PassageUp" type="Sprite2D" parent="."]
 visible = false
-texture = ExtResource("5_eeobh")
+texture = ExtResource("3_udmaw")
 region_rect = Rect2(64, 144, 16, 32)
 
-[node name="WestPassage" type="Sprite2D" parent="."]
+[node name="PassageDown" type="Sprite2D" parent="."]
 visible = false
-texture = ExtResource("6_o3h74")
+texture = ExtResource("5_eeobh")
 region_rect = Rect2(64, 144, 16, 32)

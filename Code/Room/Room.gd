@@ -1,51 +1,36 @@
 extends Node2D
 class_name Room
 
-@onready var north_passage = $NorthPassage
-@onready var east_passage = $EastPassage
-@onready var south_passage = $SouthPassage
-@onready var west_passage = $WestPassage
+@onready var passage_left = $PassageLeft
+@onready var passage_right = $PassageRight
+@onready var passage_up = $PassageUp
+@onready var passage_down = $PassageDown
 
+var grid: Vector2i
 
-enum Passage
-{
-	UP,
-	RIGHT,
-	DOWN,
-	LEFT
-}
-
-
-# Initialize.
-#var grid_position: Vector2i
-#var doors: Array = []
-#var directions: Array[Vector2i] = [Vector2i(0, -1), Vector2i(+1, 0), Vector2i(0, +1), Vector2i(-1, 0)]
+var color: Color:
+	set(value):
+		modulate = value
 
 
 func _ready():
 	# Hide graphics.
-	north_passage.hide()
-	east_passage.hide()
-	south_passage.hide()
-	west_passage.hide()
+	passage_left.hide()
+	passage_right.hide()
+	passage_up.hide()
+	passage_down.hide()
 
 
-#func RandomDirection():
-#	var rando: int = randi_range(0, doors.size() - 1)
-#	return doors.pop_at(rando)
-
-
-#func GetDirection():
-#	return Door.SOUTH
-
-
-func OpenPassage(passage: Passage):
-	match passage:
-		Passage.UP:
-			north_passage.show()
-		Passage.RIGHT:
-			east_passage.show()
-		Passage.DOWN:
-			south_passage.show()
-		Passage.LEFT:
-			west_passage.show()
+func OpenPassage(room: Room):
+	if room.grid.x < grid.x:
+		passage_left.show()
+		room.passage_right.show()
+	elif room.grid.x > grid.x:
+		passage_right.show()
+		room.passage_left.show()
+	elif room.grid.y < grid.y:
+		passage_up.show()
+		room.passage_down.show()
+	elif room.grid.y > grid.y:
+		passage_down.show()
+		room.passage_up.show()

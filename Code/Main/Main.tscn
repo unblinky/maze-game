@@ -6,6 +6,8 @@
 [node name="Main" type="Node2D"]
 
 [node name="Maze" parent="." instance=ExtResource("1_5cywy")]
+position = Vector2(104, 98)
+await_time = 0.0
 
 [node name="Player" parent="." instance=ExtResource("2_w3s58")]
 position = Vector2(704, 285)
