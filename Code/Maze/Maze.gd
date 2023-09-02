@@ -5,7 +5,7 @@ const ROOM = preload("res://Room/Room.tscn")
 
 @export var bounds: Vector2i = Vector2i(8, 8)
 @export var separation: int = 64
-@export var await_time: float = 0.4
+@export var await_time: float = 0.2
 
 var visited_coords: Array[Vector2i]
 var playhead_coord: Vector2i = Vector2i.ZERO
@@ -20,17 +20,18 @@ func CreateMaze():
 	var visited_rooms: Array[Room] # Grows and shrinks.
 	var visited_grid: Array[Vector2i] # Only grows.
 	
+	var starting_coords: Vector2i
+	starting_coords.x = randi_range(0, bounds.x)
+	starting_coords.y = randi_range(0, bounds.y)
+	
 	# Create the starting room.
 	var current_room: Room = ROOM.instantiate()
 	add_child(current_room)
-	current_room.grid.x = 0
-	current_room.grid.y = 0
-	current_room.position.x = 0.0
-	current_room.position.y = 0.0
+	current_room.Grid(starting_coords.x, starting_coords.y)
 	
 	# Need both.
 	visited_rooms.append(current_room) # Size may grow and shrink.
-	visited_coords.append(Vector2i(current_room.grid.x, current_room.grid.y))
+	visited_coords.append(current_room.grid)
 	
 	print("Visited Rooms: ", visited_rooms)
 	print("Visited Coords: ", visited_coords)
@@ -51,27 +52,27 @@ func CreateMaze():
 		
 		# As long as our room in NOT located along the the left side?
 		if current_room.grid.x - 1 >= 0:
-			var coord_to_the_west: Vector2i = current_room.grid + Vector2i.LEFT
-			if not visited_coords.has(coord_to_the_west):
-				grid_neighbors.append(coord_to_the_west)
+			var left: Vector2i = current_room.grid + Vector2i.LEFT
+			if not visited_coords.has(left):
+				grid_neighbors.append(left)
 		
 		# As long as our room is NOT located along the top side?
 		if current_room.grid.y - 1 >= 0:
-			var coord_to_the_north: Vector2i = current_room.grid + Vector2i.UP
-			if not visited_coords.has(coord_to_the_north):
-				grid_neighbors.append(coord_to_the_north)
+			var up: Vector2i = current_room.grid + Vector2i.UP
+			if not visited_coords.has(up):
+				grid_neighbors.append(up)
 		
 		# As long as our room is NOT located along the right side?
 		if current_room.grid.x + 1 < bounds.x:
-			var coords_to_the_east: Vector2i = current_room.grid + Vector2i.RIGHT
-			if not visited_coords.has(coords_to_the_east):
-				grid_neighbors.append(coords_to_the_east)
+			var right: Vector2i = current_room.grid + Vector2i.RIGHT
+			if not visited_coords.has(right):
+				grid_neighbors.append(right)
 		
 		# As long as our room is NOT located on the bottom side?
 		if current_room.grid.y + 1 < bounds.y:
-			var coords_to_the_south: Vector2i = current_room.grid + Vector2i.DOWN
-			if not visited_coords.has(coords_to_the_south):
-				grid_neighbors.append(coords_to_the_south)
+			var down: Vector2i = current_room.grid + Vector2i.DOWN
+			if not visited_coords.has(down):
+				grid_neighbors.append(down)
 		
 		print("Current Room ", current_room.grid, " has ", grid_neighbors.size(), " new directions to go.", grid_neighbors)
 		
@@ -87,9 +88,9 @@ func CreateMaze():
 			var rando: Vector2i = grid_neighbors.pick_random()
 			
 			var next_room = ROOM.instantiate()
+			add_child(next_room)
 			next_room.grid = rando
 			next_room.position = rando * separation
-			add_child(next_room)
 			next_room.color = Color.YELLOW
 			visited_rooms.append(next_room)
 			visited_coords.append(Vector2i(next_room.grid))

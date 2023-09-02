@@ -1,12 +1,15 @@
 extends Node2D
 class_name Room
 
+@onready var base = $Base
 @onready var passage_left = $PassageLeft
 @onready var passage_right = $PassageRight
 @onready var passage_up = $PassageUp
 @onready var passage_down = $PassageDown
 
+
 var grid: Vector2i
+
 
 var color: Color:
 	set(value):
@@ -19,6 +22,13 @@ func _ready():
 	passage_right.hide()
 	passage_up.hide()
 	passage_down.hide()
+
+
+func Grid(grid_x: int, grid_y: int):
+	grid.x = grid_x
+	grid.y = grid_y
+	position.x = base.texture.get_width
+	position.y = base.texture.get_height
 
 
 func OpenPassage(room: Room):
