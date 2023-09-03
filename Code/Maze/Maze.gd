@@ -4,7 +4,7 @@ class_name Maze
 const ROOM = preload("res://Room/Room.tscn")
 
 @export var bounds: Vector2i = Vector2i(8, 8)
-@export var separation: int = 64
+#@export var separation: int = 64
 @export var await_time: float = 0.2
 
 var visited_coords: Array[Vector2i]
@@ -26,8 +26,9 @@ func CreateMaze():
 	
 	# Create the starting room.
 	var current_room: Room = ROOM.instantiate()
+	current_room.grid = Vector2i(starting_coords.x, starting_coords.y)
 	add_child(current_room)
-	current_room.Grid(starting_coords.x, starting_coords.y)
+#	current_room.Grid(starting_coords.x, starting_coords.y)
 	
 	# Need both.
 	visited_rooms.append(current_room) # Size may grow and shrink.
@@ -50,25 +51,25 @@ func CreateMaze():
 		# Look for neighbors to the [north, east, south, west].
 		#------------------------------------------------------
 		
-		# As long as our room in NOT located along the the left side?
+		# As long as our room is NOT located along the the left side:
 		if current_room.grid.x - 1 >= 0:
 			var left: Vector2i = current_room.grid + Vector2i.LEFT
 			if not visited_coords.has(left):
 				grid_neighbors.append(left)
 		
-		# As long as our room is NOT located along the top side?
+		# As long as our room is NOT located along the top side:
 		if current_room.grid.y - 1 >= 0:
 			var up: Vector2i = current_room.grid + Vector2i.UP
 			if not visited_coords.has(up):
 				grid_neighbors.append(up)
 		
-		# As long as our room is NOT located along the right side?
+		# As long as our room is NOT located along the right side:
 		if current_room.grid.x + 1 < bounds.x:
 			var right: Vector2i = current_room.grid + Vector2i.RIGHT
 			if not visited_coords.has(right):
 				grid_neighbors.append(right)
 		
-		# As long as our room is NOT located on the bottom side?
+		# As long as our room is NOT located on the bottom side:
 		if current_room.grid.y + 1 < bounds.y:
 			var down: Vector2i = current_room.grid + Vector2i.DOWN
 			if not visited_coords.has(down):
@@ -88,9 +89,9 @@ func CreateMaze():
 			var rando: Vector2i = grid_neighbors.pick_random()
 			
 			var next_room = ROOM.instantiate()
-			add_child(next_room)
 			next_room.grid = rando
-			next_room.position = rando * separation
+			add_child(next_room)
+#			next_room.position = rando * separation
 			next_room.color = Color.YELLOW
 			visited_rooms.append(next_room)
 			visited_coords.append(Vector2i(next_room.grid))
@@ -101,7 +102,7 @@ func CreateMaze():
 	
 	print("Visited Coords: ", visited_coords.size())
 	
-	# Restore the modulated color.
+	# Restore the modulated color at the end.
 	for room in get_children():
 		if room is Room:
 			room.modulate = Color.WHITE
