@@ -1,14 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cw6x46202i8xp"]
+[gd_scene load_steps=2 format=3 uid="uid://cw6x46202i8xp"]
 
 [ext_resource type="PackedScene" uid="uid://buqt1fcuaic5i" path="res://Maze/Maze.tscn" id="1_5cywy"]
-[ext_resource type="PackedScene" uid="uid://ckdvdsv8ge6df" path="res://Player/Player.tscn" id="2_w3s58"]
 
 [node name="Main" type="Node2D"]
 
 [node name="Maze" parent="." instance=ExtResource("1_5cywy")]
 position = Vector2(104, 98)
 await_time = 0.0
-
-[node name="Player" parent="." instance=ExtResource("2_w3s58")]
-position = Vector2(704, 285)
-motion_mode = 1

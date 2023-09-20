@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dymg5u4e7k0xr"]
+
+[ext_resource type="Script" path="res://Exporer/Explorer.gd" id="1_qxxq5"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_4a7fm"]
+radius = 12.0
+height = 24.0
+
+[node name="Explorer" type="Node2D"]
+script = ExtResource("1_qxxq5")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+mesh = SubResource("SphereMesh_4a7fm")
