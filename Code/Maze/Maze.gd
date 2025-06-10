@@ -38,7 +38,7 @@ func CreateMaze():
 	
 	# As long as the number of rooms we visit is less than `total_rooms`...
 	while visited_coords.size() < total_rooms:
-		await get_tree().create_timer(await_time).timeout
+		await get_tree().create_timer(await_time)
 		
 		var grid_neighbors: Array[Vector2i]
 		

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ckdvdsv8ge6df"]
 
-[ext_resource type="Script" path="res://Player/Player.gd" id="1_5ory8"]
+[ext_resource type="Script" uid="uid://dr0rwglghv4br" path="res://Player/Player.gd" id="1_5ory8"]
 [ext_resource type="Texture2D" uid="uid://sgoncenbwkg0" path="res://Room/assets/room_tileset.png" id="2_jdts8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_quycs"]

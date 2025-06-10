@@ -1,7 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://buqt1fcuaic5i"]
 
-[ext_resource type="Script" path="res://Maze/Maze.gd" id="1_5xae1"]
+[ext_resource type="Script" uid="uid://5s14sp7pvtx6" path="res://Maze/Maze.gd" id="1_5xae1"]
 
 [node name="Maze" type="Node2D"]
-position = Vector2(196, 139)
 script = ExtResource("1_5xae1")
